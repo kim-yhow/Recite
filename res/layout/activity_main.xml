@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+      	xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+       
+ <android.support.v4.widget.DrawerLayout    
+    android:id="@+id/drawer_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >   
+  
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >    
+    <TextView
+            android:id="@+id/txt1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="这是主界面" />  
+ </LinearLayout>        
+       
+       
+       
+ 	<include
+       	android:id="@+id/right_sliding"
+		android:layout_width="240dp"
+   		android:layout_height="match_parent"
+        layout="@layout/menu_right_layout" 
+       	android:layout_gravity="end"/>
+
+  <include 
+        layout="@layout/menu_left_layout" 
+        android:layout_width="300dp"
+    	android:layout_height="match_parent"
+  		android:layout_gravity="start"/>
+ 	
+ 	
+  </android.support.v4.widget.DrawerLayout>   
+
+</LinearLayout>        
+   
+ 

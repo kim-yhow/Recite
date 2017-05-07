@@ -1,0 +1,21 @@
+2017年5月5日
+gyc：
+创建了项目，完成了大致的布局。
+创建了包cn.edu.njnu.android.recite 加入java文件：MainActivity.java
+xml文件：
+activity_main.xml  
+menu_left_layout.xml 
+menu_right_layout.xml
+
+
+kim_yhow
+创建包cn.edu.njnu.android.View 加入SearchText.java 自定义view  搜索框
+更新了menu_left_layout.xml （增加了搜索框，加了listview控件)
+
+
+ 
+    
+      
+	     
+   
+

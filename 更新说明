@@ -1,5 +1,5 @@
 2017年5月5日
-gyc：
+Yai：
 创建了项目，完成了大致的布局。
 创建了包cn.edu.njnu.android.recite 加入java文件：MainActivity.java
 xml文件：
@@ -8,14 +8,32 @@ menu_left_layout.xml
 menu_right_layout.xml
 
 
-kim_yhow
+kim_yhow v0.2
 创建包cn.edu.njnu.android.View 加入SearchText.java 自定义view  搜索框
 更新了menu_left_layout.xml （增加了搜索框，加了listview控件)
 
 
- 
-    
-      
-	     
-   
-
+Yai v0.3
+2017年5月6日
+更改包命名规范：cn.edu.njnu.android.*
+文件名命名规范：SearchText.java->SearchTextView.java
+控件命名规范：xml文件名_控件名
+空间长度单位dp，字体单位sp
+更新：
+cn.edu.njnu.android.Adapter：
+	IndexAdapter 适配器，将ListView和ArrayList关联，ListView显示相关；
+xml文件：
+	1.menu_left_item ListView显示相关xml；
+	2.menu_left_layout中加入了SelectAlphaView；
+cn.edu.njnu.android.Class：
+	1.Phonetic 拼音类，负责将汉字的第一个字转为对应的大写字符（注：考虑到背诵软件不涉及英文，没有做英文部分）；
+	2.Sort 排序类，汉字排序规则，负责在数据导入后对ArrayList进行排序；
+cn.edu.njnu.android.View:
+	自定义View SelectAlphaView 加入，右侧选择框；
+	
+2017年5月7日
+更新：
+cn.edu.njnu.android.View:
+	SelectAlphaView实现点击选中翻页事件
+cn.edu.njnu.android.Activity:
+	在MainActivity中实现了右侧字母栏随着左侧ListView滑动而改变选中情况

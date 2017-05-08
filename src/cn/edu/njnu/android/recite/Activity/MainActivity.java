@@ -1,7 +1,13 @@
-package cn.edu.njnu.android.recite;
+package cn.edu.njnu.android.recite.Activity;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
 
+import cn.edu.njnu.android.recite.R;
+import cn.edu.njnu.android.recite.Adpter.IndexAdapter;
+import cn.edu.njnu.android.recite.Class.*;
+import cn.edu.njnu.android.recite.View.SelectAlphaView;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -15,8 +21,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -24,12 +36,54 @@ public class MainActivity extends Activity {
 	private ActionBarDrawerToggle toggle;
 	private View right_sliding;
 	private ActionBar actionBar;
+	private ArrayList<String> index;
+	private ListView lv;
+	private TextView toast;
+	private SelectAlphaView sav;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		initActionBar();
 		initDrawerLayout();
+		
+		lv=(ListView)findViewById(R.id.menu_left_lv);
+		toast=(TextView)findViewById(R.id.menu_left_toast);
+		sav=(SelectAlphaView)findViewById(R.id.menu_left_sav);
+		
+		lv.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if(scrollState==SCROLL_STATE_TOUCH_SCROLL){
+					int pos=lv.getFirstVisiblePosition();
+					String str=Phonetic.ToPhonetic(String.valueOf(lv.getAdapter().getItem(pos)).substring(0,1));
+					for(int i=0;i<sav.alpha.length;i++){
+						if(sav.alpha[i].equals(str)){
+							sav.position=i;
+							sav.invalidate();
+							break;
+						}
+					}
+				}
+				
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				
+				
+			}
+		});
+		
+		
+		index=new ArrayList<String>();
+		Test();
+		Sort s=new Sort();
+		Collections.sort( index, s);
+		lv.setAdapter(new IndexAdapter(this, index));
 	}
 
 	@SuppressLint("NewApi")
@@ -44,8 +98,7 @@ public class MainActivity extends Activity {
 		//È¥³ýÄ¬ÈÏµÄICONÍ¼±ê
 		 Drawable colorDrawable=new 
 				 ColorDrawable(android.R.color.transparent);
-		 actionBar.setIcon(colorDrawable);
-		 
+		actionBar.setIcon(colorDrawable);
 		actionBar.setDisplayShowCustomEnabled(true);
 		TextView tvTitle=new TextView(this);
 		tvTitle.setText("Ö÷  Ò³");
@@ -134,6 +187,42 @@ public class MainActivity extends Activity {
 	        }  
 	    }  
 	    return super.onMenuOpened(featureId, menu);  
-	}  
+	}
 
+	public TextView getToast() {
+		return toast;
+	}
+
+	public void Test(){
+		index.add("ÕÅ·É");
+		index.add("¹ØÓð");
+		index.add("Áõ±¸");
+		index.add("ÕÅÁÉ");
+		index.add("²Ü²Ù");
+		index.add("ËïÈ¨");
+		index.add("Áõ±í");
+		index.add("¶­×¿");
+		index.add("ÂÀ²¼");
+		index.add("µõËÀ¹í");
+		index.add("Öî¸ðÁÁ");
+		index.add("Ë¾ÂíÜ²");
+		index.add("ÕÔÔÆ");
+		index.add("°¢¹ÈÎÝ");
+		index.add("±Ï¸£½£");
+		index.add("²ÜÑ©ÇÛ");
+		index.add("µÒÈÊ½Ü");
+		index.add("ÖÜè¤");
+		index.add("¿ÂÄÏ");
+		index.add("Âí³¬");
+		index.add("Ëï²ß");
+		index.add("Ì«Ê·´È");
+		index.add("·þ²¿°ë²Ø");
+		index.add("×ô×ôÄ¾Ð¡´ÎÀÉ");
+		index.add("°Â°ÍÂí");
+		index.add("ÒÁ¿¨ÂåË¹");
+		
+	}
+
+	
+	
 }

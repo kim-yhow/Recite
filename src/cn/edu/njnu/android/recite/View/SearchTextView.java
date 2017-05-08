@@ -1,4 +1,4 @@
-package cn.edu.njnu.android.View;
+package cn.edu.njnu.android.recite.View;
 
 
 
@@ -16,7 +16,7 @@ import android.view.animation.CycleInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 
-public class SearchText extends EditText implements 
+public class SearchTextView extends EditText implements 
    OnFocusChangeListener,TextWatcher {
 	
 	/*
@@ -24,15 +24,15 @@ public class SearchText extends EditText implements
 	 */
 	private Drawable mClearDrawable;	
 	
-	 public SearchText(Context context) { 
+	 public SearchTextView(Context context) { 
 	    	this(context, null); 
 	    } 
 	 
-	public SearchText(Context context, AttributeSet attrs) { 
+	public SearchTextView(Context context, AttributeSet attrs) { 
 	    	//这里构造方法也很重要，不加这个很多属性不能再XML里面定义
 	    	this(context, attrs, android.R.attr.editTextStyle); 
     } 
-	public SearchText(Context context, AttributeSet attrs, int edittextstyle) {
+	public SearchTextView(Context context, AttributeSet attrs, int edittextstyle) {
 		super(context, attrs, edittextstyle);
 		init();
 	}
@@ -60,7 +60,7 @@ public class SearchText extends EditText implements
 
 
 	
-	private void addTextChangedListener(SearchText searchText) {
+	private void addTextChangedListener(SearchTextView searchText) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -138,6 +138,7 @@ public class SearchText extends EditText implements
      */
     public void setShakeAnimation(){
     	this.setAnimation(shakeAnimation(5));
+    	
     }
     
     

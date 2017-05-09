@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,20 +25,21 @@ public class SelectAlphaView extends View implements View.OnTouchListener{
 	public int position=-1;
 	private Context mContext;
 	
+	//
 	public SelectAlphaView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext=context;
 		paint=new Paint(Paint.ANTI_ALIAS_FLAG);
 		paint.setColor(Color.WHITE);
 		paint.setTextAlign(Align.CENTER);
-		paint.setTextSize(35);
-		
+		paint.setTextSize(35);		
 		this.setOnTouchListener(this);
 	}
 	
-	@Override
+	@Override	
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+
 		if(y==0) y=this.getHeight()/28;
 		for(int i=0;i<alpha.length;i++){
 			if(position!=-1&&i==position){
@@ -50,8 +52,10 @@ public class SelectAlphaView extends View implements View.OnTouchListener{
 		
 	}
 
+	//
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
+		setBackgroundResource(R.drawable.sidebar_background);
 		float py=event.getY();
 		position=(((int)py)-((int)py)%y)/y;
 		
@@ -66,6 +70,7 @@ public class SelectAlphaView extends View implements View.OnTouchListener{
 		lv.setClickable(false);
 		
 		if(event.getAction()==MotionEvent.ACTION_UP){
+			setBackground(new ColorDrawable(0x00000000));
 			lv.setClickable(true);
 			tv.setVisibility(View.GONE);
 		}

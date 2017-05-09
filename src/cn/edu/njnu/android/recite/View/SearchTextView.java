@@ -59,11 +59,7 @@ public class SearchTextView extends EditText implements
 	}
 
 
-	
-	private void addTextChangedListener(SearchTextView searchText) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	/**
      * 因为我们不能直接给EditText设置点击事件，所以我们用记住我们按下的位置来模拟点击事件

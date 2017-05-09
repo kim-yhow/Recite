@@ -8,17 +8,25 @@
     	android:id="@+id/item_title"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:textSize="30sp"
-        android:background="#888888"
-        android:padding="2dp"/>
+         android:background="#E0E0E0"
+        android:textColor="#454545"
+        android:layout_weight="1.0"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"/>
     
     <TextView
         android:id="@+id/item_content"
         android:layout_below="@+id/item_title"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:textSize="20sp"
-        android:padding="5dp"/>
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:layout_weight="1.0"
+        android:textColor="#336598"
+        android:layout_marginLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
     
     
 </RelativeLayout>

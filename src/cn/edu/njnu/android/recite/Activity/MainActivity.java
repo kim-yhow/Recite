@@ -4,10 +4,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import cn.edu.njnu.android.recite.R;
-import cn.edu.njnu.android.recite.Adpter.IndexAdapter;
-import cn.edu.njnu.android.recite.Class.*;
-import cn.edu.njnu.android.recite.View.SelectAlphaView;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -18,29 +14,40 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.FrameLayout;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import cn.edu.njnu.android.recite.R;
+import cn.edu.njnu.android.recite.Adpter.IndexAdapter;
+import cn.edu.njnu.android.recite.Class.Phonetic;
+import cn.edu.njnu.android.recite.Class.Sort;
+import cn.edu.njnu.android.recite.View.SearchTextView;
+import cn.edu.njnu.android.recite.View.SelectAlphaView;
 
 public class MainActivity extends Activity {
 	private DrawerLayout drawerLayout;
 	private ActionBarDrawerToggle toggle;
 	private View right_sliding;
 	private ActionBar actionBar;
-	private ArrayList<String> index;
+	private ArrayList<String> mDataList;
 	private ListView lv;
 	private TextView toast;
 	private SelectAlphaView sav;
-	
+	private SearchTextView mSearch;
+	private IndexAdapter mAdapter;
+	private Sort mSortOfPhonetic=new Sort();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,13 +57,43 @@ public class MainActivity extends Activity {
 		
 		lv=(ListView)findViewById(R.id.menu_left_lv);
 		toast=(TextView)findViewById(R.id.menu_left_toast);
-		sav=(SelectAlphaView)findViewById(R.id.menu_left_sav);
+		sav=(SelectAlphaView)findViewById(R.id.menu_left_sav);	
+		mSearch=(SearchTextView)findViewById(R.id.menu_left_stv);
 		
+		//搜索框的监听函数		
+		mSearch.addTextChangedListener(new TextWatcher(){
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+			//搜索框变换监听
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				//删选字符
+				filterSource(s.toString());
+				
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		//listView的滑动监听
 		lv.setOnScrollListener(new OnScrollListener() {
 			
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				if(scrollState==SCROLL_STATE_TOUCH_SCROLL){
+				//手接触ScrollView触发一次或者进行滑动，或者停下时均进行判断
+				if(scrollState==SCROLL_STATE_FLING ||scrollState==SCROLL_STATE_TOUCH_SCROLL ||scrollState==SCROLL_STATE_IDLE ){
+					//listView第一个可见项
 					int pos=lv.getFirstVisiblePosition();
 					String str=Phonetic.ToPhonetic(String.valueOf(lv.getAdapter().getItem(pos)).substring(0,1));
 					for(int i=0;i<sav.alpha.length;i++){
@@ -66,25 +103,60 @@ public class MainActivity extends Activity {
 							break;
 						}
 					}
-				}
-				
+				}				
 			}
 			
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				
-				
 			}
 		});
 		
-		
-		index=new ArrayList<String>();
+        //listView的项目点击监听，一旦点击 便会调用重载的OnItemClik函数，具体操作可以在此处填写
+		lv.setOnItemClickListener(new OnItemClickListener() {
+			
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+			Toast.makeText(getApplication(),(String)mAdapter.getItem(position) , Toast.LENGTH_SHORT).show();
+				
+			}
+		});
+				
+		mDataList=new ArrayList<String>();
 		Test();
-		Sort s=new Sort();
-		Collections.sort( index, s);
-		lv.setAdapter(new IndexAdapter(this, index));
+		//比较规则
+		
+		//Collection.sort方法参数1 需要比较的内容，参数2 比较规则
+		Collections.sort(mDataList,mSortOfPhonetic);
+		mAdapter=new IndexAdapter(this, mDataList);
+		lv.setAdapter(mAdapter);
 	}
+
+	//用于过滤函数
+	protected void filterSource(String str) {
+		ArrayList<String> fiterData=new ArrayList<String>();
+		if(TextUtils.isEmpty(str))
+		{
+			fiterData=mDataList;
+		}
+		else  {
+			fiterData.clear();
+			//java list遍历 for(数据类型 自定义参数  需要遍历的list)
+			for(String data:mDataList)
+			{
+				if(data.toUpperCase().indexOf(str.toUpperCase())!=-1 ||
+						(Phonetic.ToPhonetic(data.substring(0,1))).toUpperCase().equals(str.toUpperCase())  )
+				{
+					fiterData.add(data);
+				}
+			}
+			}
+		Collections.sort(fiterData,mSortOfPhonetic);
+		mAdapter.updateListView(fiterData);;
+		}
+		
+	
 
 	@SuppressLint("NewApi")
 	private void initActionBar(){
@@ -133,15 +205,12 @@ public class MainActivity extends Activity {
 					public void onDrawerOpened(View drawerView) {
 						// TODO Auto-generated method stub
 						super.onDrawerOpened(drawerView);
-					}
-			
+					}			
 		};
 		drawerLayout.setDrawerListener(toggle);
 		//drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 		//drawerLayout.openDrawer(right_sliding);
-		
-		
-	} 
+	} 	
 	
 	private void toggleLeftSliding(){
 		if(drawerLayout.isDrawerOpen(Gravity.START)){
@@ -150,6 +219,7 @@ public class MainActivity extends Activity {
 			drawerLayout.openDrawer(Gravity.START);
 		}
 	}
+
 	private void toggleRightSliding(){
 		if(drawerLayout.isDrawerOpen(Gravity.END)){
 			drawerLayout.closeDrawer(Gravity.END);
@@ -157,6 +227,7 @@ public class MainActivity extends Activity {
 			drawerLayout.openDrawer(Gravity.END);
 		}
 	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item){
 		switch(item.getItemId()){
@@ -166,8 +237,7 @@ public class MainActivity extends Activity {
 		case R.id.usersetting:
 			toggleRightSliding();
 			break;
-		}
-			
+		}			
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -194,32 +264,32 @@ public class MainActivity extends Activity {
 	}
 
 	public void Test(){
-		index.add("张飞");
-		index.add("关羽");
-		index.add("刘备");
-		index.add("张辽");
-		index.add("曹操");
-		index.add("孙权");
-		index.add("刘表");
-		index.add("董卓");
-		index.add("吕布");
-		index.add("吊死鬼");
-		index.add("诸葛亮");
-		index.add("司马懿");
-		index.add("赵云");
-		index.add("阿谷屋");
-		index.add("毕福剑");
-		index.add("曹雪芹");
-		index.add("狄仁杰");
-		index.add("周瑜");
-		index.add("柯南");
-		index.add("马超");
-		index.add("孙策");
-		index.add("太史慈");
-		index.add("服部半藏");
-		index.add("佐佐木小次郎");
-		index.add("奥巴马");
-		index.add("伊卡洛斯");
+		mDataList.add("张飞");
+		mDataList.add("关羽");
+		mDataList.add("刘备");
+		mDataList.add("张辽");
+		mDataList.add("曹操");
+		mDataList.add("孙权");
+		mDataList.add("刘表");
+		mDataList.add("董卓");
+		mDataList.add("吕布");
+		mDataList.add("吊死鬼");
+		mDataList.add("诸葛亮");
+		mDataList.add("司马懿");
+		mDataList.add("赵云");
+		mDataList.add("阿谷屋");
+		mDataList.add("毕福剑");
+		mDataList.add("曹雪芹");
+		mDataList.add("狄仁杰");
+		mDataList.add("周瑜");
+		mDataList.add("柯南");
+		mDataList.add("马超");
+		mDataList.add("孙策");
+		mDataList.add("太史慈");
+		mDataList.add("服部半藏");
+		mDataList.add("佐佐木小次郎");
+		mDataList.add("奥巴马");
+		mDataList.add("伊卡洛斯");
 		
 	}
 

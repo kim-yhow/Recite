@@ -32,8 +32,24 @@ cn.edu.njnu.android.View:
 	自定义View SelectAlphaView 加入，右侧选择框；
 	
 2017年5月7日
+Yai
 更新：
 cn.edu.njnu.android.View:
 	SelectAlphaView实现点击选中翻页事件
 cn.edu.njnu.android.Activity:
 	在MainActivity中实现了右侧字母栏随着左侧ListView滑动而改变选中情况
+
+2017年5月8日
+kim_yhow
+为Yai的程序加了一些注释 ==
+更新了menu_left_listitiem.xml的内容，修改了背景色和字体大小（有待商榷！！）
+修改了SearchTextView，加了字母表的背景色。
+cn.edu.njnu.android.Activity:
+	MainActivity中添加了
+	1.IndexAdapter mAdapter 的成员变量，为了可以点击命令中使用
+	2.增加了lv的监听函数，用于点击项目时间，将lv.setAdapter(new IndexAdapter(this, index);改为了mAdapter=new IndexAdapter(this, index); lv.setAdapter(mAdapter);
+	3.改动了滑动时判断语句中的内容，增加了滑动时，停止时的判断
+	4.增加了SearchTextView的addTextChangedListener监听函数,增加了filterSource(s.toString())函数
+	5.将成员变量index 改成了mDataList
+	6.将Sort s=new Sort();作为成员变量，为了方便进行筛选同时将s改为mSortOfPhonetic
+	

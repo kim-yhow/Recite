@@ -50,6 +50,7 @@ public class Phonetic {
         "zhai", "zhan", "zhang", "zhao", "zhe", "zhen", "zheng", "zhi", "zhong", "zhou", "zhu", "zhua", "zhuai", "zhuan", "zhuang", "zhui",  
         "zhun", "zhuo", "zi", "zong", "zou", "zu", "zuan", "zui", "zun", "zuo"}; 
 	
+	//汉字转成ascii码，其实就是将汉字转换为gb2312编码，再减去256*256 而且如果是
 	private static int getChsAscii(String chs) {  
         int asc = 0;  
         try {  
@@ -71,6 +72,7 @@ public class Phonetic {
         return asc;  
     }  
 	
+	//转换到拼音
 	public static String ToPhonetic(String str){
 		int asc=getChsAscii(str);
 		for(int i=value.length-1;i>=0;i--){

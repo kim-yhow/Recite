@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -9,19 +9,59 @@
   		android:id="@+id/drawer_layout"
     	android:layout_width="fill_parent"
     	android:layout_height="fill_parent" >   
+    	
+ 	    <FrameLayout
+ 	        android:layout_width="match_parent"
+ 	        android:layout_height="match_parent">
   
      	<LinearLayout
         	android:layout_width="match_parent"
         	android:layout_height="wrap_content"
         	android:orientation="vertical" >    
+    		
+     	   
     		<TextView
-            	android:id="@+id/txt1"
+            	android:id="@+id/ac_main_context"
             	android:layout_width="match_parent"
-            	android:layout_height="match_parent"
-            	android:gravity="center"
-            	android:text="这是主界面" />  
-		</LinearLayout>        
-       
+            	android:layout_height="wrap_content"
+            	android:layout_margin="30dp"
+            	android:scrollbars="vertical"/>  
+            	
+    		<TextView
+    		    android:id="@+id/ac_main_result"
+    		    android:layout_width="match_parent"
+            	android:layout_height="wrap_content"
+				android:scrollbars="vertical"
+				android:textAlignment="center"/>
+            	
+    		<Button 
+    		    android:id="@+id/ac_main_start"
+    		  	android:layout_width="120dp"
+            	android:layout_height="40dp"
+            	android:layout_gravity="center"
+            	android:text="开始评测"/>
+    		
+    		<Button 
+    		    android:id="@+id/ac_main_end"
+    		  	android:layout_width="120dp"
+            	android:layout_height="40dp"
+            	android:layout_gravity="center"
+            	android:text="停止评测"/>
+    		
+    		
+    		
+		</LinearLayout> 
+			
+     		<TextView 
+     		    android:id="@+id/ac_main_res"
+     		    android:layout_margin="30dp"
+     		    android:layout_width="match_parent"
+            	android:layout_height="wrap_content"
+            	android:visibility="gone"
+            	android:scrollbars="vertical"
+            	android:background="#999999"/>
+     		
+       	</FrameLayout>
        
        
  		<include

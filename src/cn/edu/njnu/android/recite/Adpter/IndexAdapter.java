@@ -28,7 +28,7 @@ public class IndexAdapter extends BaseAdapter {
 		this.context=context;
 	}
 	
-	//¸üĞÂlist
+	//æ›´æ–°list
 	public void updateListView(ArrayList<String> list){  
         this.index =  list;  
         notifyDataSetChanged();  
@@ -51,18 +51,18 @@ public class IndexAdapter extends BaseAdapter {
 	}
 	
 	   /*
-	    * Õâ¸ö¶«Î÷ÔÚÒ»Ğ©ĞèÒªÓÃµ½Adapter×Ô¶¨¿Ø¼şÏÔÊ¾·½Ê½µÄÊ±ºò·Ç³£ÓĞÓÃ
-	    *Adapter ÓĞ¸ögetView·½·¨£¬¿ÉÒÔÊ¹ÓÃsetTag°Ñ²éÕÒµÄview»º´æÆğÀ´·½±ã¶à´ÎÖØÓÃ
-	    *ViewÖĞµÄsetTag£¨Onbect£©±íÊ¾¸øViewÌí¼ÓÒ»¸ö¸ñÍâµÄÊı¾İ£¬ÒÔºó¿ÉÒÔÓÃgetTag()½«Õâ¸öÊı¾İÈ¡³öÀ´¡£
+	    * è¿™ä¸ªä¸œè¥¿åœ¨ä¸€äº›éœ€è¦ç”¨åˆ°Adapterè‡ªå®šæ§ä»¶æ˜¾ç¤ºæ–¹å¼çš„æ—¶å€™éå¸¸æœ‰ç”¨
+	    *Adapter æœ‰ä¸ªgetViewæ–¹æ³•ï¼Œå¯ä»¥ä½¿ç”¨setTagæŠŠæŸ¥æ‰¾çš„viewç¼“å­˜èµ·æ¥æ–¹ä¾¿å¤šæ¬¡é‡ç”¨
+	    *Viewä¸­çš„setTagï¼ˆOnbectï¼‰è¡¨ç¤ºç»™Viewæ·»åŠ ä¸€ä¸ªæ ¼å¤–çš„æ•°æ®ï¼Œä»¥åå¯ä»¥ç”¨getTag()å°†è¿™ä¸ªæ•°æ®å–å‡ºæ¥ã€‚
 	    *
 	    */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder vh = null;
 		if(convertView==null){
-			//´ÓcontextÖĞ»ñµÃÒ»¸ö²¼¾ÖÌî³äÆ÷£¬ÕâÑù¾Í¿ÉÒÔ°Ñxml²¼¾ÖÎÄ¼ş»»³Éview¶ÔÏóÁË
+			//ä»contextä¸­è·å¾—ä¸€ä¸ªå¸ƒå±€å¡«å……å™¨ï¼Œè¿™æ ·å°±å¯ä»¥æŠŠxmlå¸ƒå±€æ–‡ä»¶æ¢æˆviewå¯¹è±¡äº†
 			convertView=LayoutInflater.from(context).inflate(R.layout.menu_left_listitem, null);
-			//Ïàµ±ÓÚÊÇ»º´æ£¬½«ÊÊÅäÆ÷ÖĞµÄÒ»Ğ©view¼ÓÈëµ½ÁËvhÖĞ£¬ÔÚÖ®ºóÊ¹ÓÃÊ±¿ÉÒÔÖ±½ÓÓÃvh
+			//ç›¸å½“äºæ˜¯ç¼“å­˜ï¼Œå°†é€‚é…å™¨ä¸­çš„ä¸€äº›viewåŠ å…¥åˆ°äº†vhä¸­ï¼Œåœ¨ä¹‹åä½¿ç”¨æ—¶å¯ä»¥ç›´æ¥ç”¨vh
 			vh=new ViewHolder();			
 			vh.title=(TextView)convertView.findViewById(R.id.item_title);
 			vh.content=(TextView)convertView.findViewById(R.id.item_content);
@@ -72,7 +72,7 @@ public class IndexAdapter extends BaseAdapter {
 				
 		vh.content.setText(index.get(position));
 		
-		//Èç¹û²»ÊÇÊÇµÚÒ»¸öÆ´Òô£¬ÇÒÕâ¸öºÍÉÏÒ»¸öºº×ÖµÄÆ´ÒôÊ××ÖÄ¸Ò»Ñù£¬Ôò²»ÏÔÊ¾title£¬·ñÔò¾ÍÏÔÊ¾
+		//å¦‚æœä¸æ˜¯æ˜¯ç¬¬ä¸€ä¸ªæ‹¼éŸ³ï¼Œä¸”è¿™ä¸ªå’Œä¸Šä¸€ä¸ªæ±‰å­—çš„æ‹¼éŸ³é¦–å­—æ¯ä¸€æ ·ï¼Œåˆ™ä¸æ˜¾ç¤ºtitleï¼Œå¦åˆ™å°±æ˜¾ç¤º
 		if(position!=0&&
 		Phonetic.ToPhonetic(index.get(position).substring(0,1))
 											.equals(Phonetic.ToPhonetic(index.get(position-1).substring(0,1))))

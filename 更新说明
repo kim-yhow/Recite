@@ -53,3 +53,16 @@ cn.edu.njnu.android.Activity:
 	5.将成员变量index 改成了mDataList
 	6.将Sort s=new Sort();作为成员变量，为了方便进行筛选同时将s改为mSortOfPhonetic
 	
+2017年5月11日
+Yai v0.5
+更新：
+cn.edu.njnu.android.Activity:
+	将讯飞SDK实装了（文件中导入了新的jar包和配置文件，在lib、asset目录下）；
+Mainfest：
+	1.在ManiFest中添加了权限；
+	2.修改了最低API->17
+2017年5月12日
+更新：
+cn.edu.njnu.android.Activity
+	1.新建TextView显示结果；
+	2.做了一些UI界面的优化；

@@ -50,7 +50,7 @@ public class Phonetic {
         "zhai", "zhan", "zhang", "zhao", "zhe", "zhen", "zheng", "zhi", "zhong", "zhou", "zhu", "zhua", "zhuai", "zhuan", "zhuang", "zhui",  
         "zhun", "zhuo", "zi", "zong", "zou", "zu", "zuan", "zui", "zun", "zuo"}; 
 	
-	//ºº×Ö×ª³ÉasciiÂë£¬ÆäÊµ¾ÍÊÇ½«ºº×Ö×ª»»Îªgb2312±àÂë£¬ÔÙ¼õÈ¥256*256 ¶øÇÒÈç¹ûÊÇ
+	//æ±‰å­—è½¬æˆasciiç ï¼Œå…¶å®žå°±æ˜¯å°†æ±‰å­—è½¬æ¢ä¸ºgb2312ç¼–ç ï¼Œå†å‡åŽ»256*256 è€Œä¸”å¦‚æžœæ˜¯
 	private static int getChsAscii(String chs) {  
         int asc = 0;  
         try {  
@@ -72,7 +72,7 @@ public class Phonetic {
         return asc;  
     }  
 	
-	//×ª»»µ½Æ´Òô
+	//è½¬æ¢åˆ°æ‹¼éŸ³
 	public static String ToPhonetic(String str){
 		int asc=getChsAscii(str);
 		for(int i=value.length-1;i>=0;i--){

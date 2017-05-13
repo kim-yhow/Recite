@@ -1,68 +1,80 @@
-2017��5��5��
-Yai��
-��������Ŀ������˴��µĲ��֡�
-�����˰�cn.edu.njnu.android.recite ����java�ļ���MainActivity.java
-xml�ļ���
+2017年5月5日
+Yai：
+创建了项目，完成了大致的布局。
+创建了包cn.edu.njnu.android.recite 加入java文件：MainActivity.java
+xml文件：
 activity_main.xml  
 menu_left_layout.xml 
 menu_right_layout.xml
 
 
 kim_yhow v0.2
-������cn.edu.njnu.android.View ����SearchText.java �Զ���view  ������
-������menu_left_layout.xml �������������򣬼���listview�ؼ�)
+创建包cn.edu.njnu.android.View 加入SearchText.java 自定义view  搜索框
+更新了menu_left_layout.xml （增加了搜索框，加了listview控件)
 
 
 Yai v0.3
-2017��5��6��
-���İ������淶��cn.edu.njnu.android.*
-�ļ��������淶��SearchText.java->SearchTextView.java
-�ؼ������淶��xml�ļ���_�ؼ���
-�ռ䳤�ȵ�λdp�����嵥λsp
-���£�
-cn.edu.njnu.android.Adapter��
-	IndexAdapter ����������ListView��ArrayList������ListView��ʾ��أ�
-xml�ļ���
-	1.menu_left_item ListView��ʾ���xml��
-	2.menu_left_layout�м�����SelectAlphaView��
-cn.edu.njnu.android.Class��
-	1.Phonetic ƴ���࣬���𽫺��ֵĵ�һ����תΪ��Ӧ�Ĵ�д�ַ���ע�����ǵ������������漰Ӣ�ģ�û����Ӣ�Ĳ��֣���
-	2.Sort �����࣬����������򣬸��������ݵ�����ArrayList��������
+2017年5月6日
+更改包命名规范：cn.edu.njnu.android.*
+文件名命名规范：SearchText.java->SearchTextView.java
+控件命名规范：xml文件名_控件名
+空间长度单位dp，字体单位sp
+更新：
+cn.edu.njnu.android.Adapter：
+	IndexAdapter 适配器，将ListView和ArrayList关联，ListView显示相关；
+xml文件：
+	1.menu_left_item ListView显示相关xml；
+	2.menu_left_layout中加入了SelectAlphaView；
+cn.edu.njnu.android.Class：
+	1.Phonetic 拼音类，负责将汉字的第一个字转为对应的大写字符（注：考虑到背诵软件不涉及英文，没有做英文部分）；
+	2.Sort 排序类，汉字排序规则，负责在数据导入后对ArrayList进行排序；
 cn.edu.njnu.android.View:
-	�Զ���View SelectAlphaView ���룬�Ҳ�ѡ���
+	自定义View SelectAlphaView 加入，右侧选择框；
 	
-2017��5��7��
+2017年5月7日
 Yai
-���£�
+更新：
 cn.edu.njnu.android.View:
-	SelectAlphaViewʵ�ֵ��ѡ�з�ҳ�¼�
+	SelectAlphaView实现点击选中翻页事件
 cn.edu.njnu.android.Activity:
-	��MainActivity��ʵ�����Ҳ���ĸ���������ListView�������ı�ѡ�����
+	在MainActivity中实现了右侧字母栏随着左侧ListView滑动而改变选中情况
 
-2017��5��8��
+2017年5月8日
 kim_yhow
-ΪYai�ĳ������һЩע�� ==
-������menu_left_listitiem.xml�����ݣ��޸��˱���ɫ�������С���д���ȶ������
-�޸���SearchTextView��������ĸ���ı���ɫ��
+为Yai的程序加了一些注释 ==
+更新了menu_left_listitiem.xml的内容，修改了背景色和字体大小（有待商榷！！）
+修改了SearchTextView，加了字母表的背景色。
 cn.edu.njnu.android.Activity:
-	MainActivity��������
-	1.IndexAdapter mAdapter �ĳ�Ա������Ϊ�˿��Ե��������ʹ��
-	2.������lv�ļ������������ڵ����Ŀʱ�䣬��lv.setAdapter(new IndexAdapter(this, index);��Ϊ��mAdapter=new IndexAdapter(this, index); lv.setAdapter(mAdapter);
-	3.�Ķ��˻���ʱ�ж�����е����ݣ������˻���ʱ��ֹͣʱ���ж�
-	4.������SearchTextView��addTextChangedListener��������,������filterSource(s.toString())����
-	5.����Ա����index �ĳ���mDataList
-	6.��Sort s=new Sort();��Ϊ��Ա������Ϊ�˷������ɸѡͬʱ��s��ΪmSortOfPhonetic
+	MainActivity中添加了
+	1.IndexAdapter mAdapter 的成员变量，为了可以点击命令中使用
+	2.增加了lv的监听函数，用于点击项目时间，将lv.setAdapter(new IndexAdapter(this, index);改为了mAdapter=new IndexAdapter(this, index); lv.setAdapter(mAdapter);
+	3.改动了滑动时判断语句中的内容，增加了滑动时，停止时的判断
+	4.增加了SearchTextView的addTextChangedListener监听函数,增加了filterSource(s.toString())函数
+	5.将成员变量index 改成了mDataList
+	6.将Sort s=new Sort();作为成员变量，为了方便进行筛选同时将s改为mSortOfPhonetic
 	
-2017��5��11��
+2017年5月11日
 Yai v0.5
-���£�
+更新：
 cn.edu.njnu.android.Activity:
-	��Ѷ��SDKʵװ�ˣ��ļ��е������µ�jar���������ļ�����lib��assetĿ¼�£���
-Mainfest��
-	1.��ManiFest��������Ȩ�ޣ�
-	2.�޸������API->17
-2017��5��12��
-���£�
+	将讯飞SDK实装了（文件中导入了新的jar包和配置文件，在lib、asset目录下）；
+Mainfest：
+	1.在ManiFest中添加了权限；
+	2.修改了最低API->17
+2017年5月12日
+更新：
 cn.edu.njnu.android.Activity
-	1.�½�TextView��ʾ�����
-	2.����һЩUI������Ż���
+	1.新建TextView显示结果；
+	2.做了一些UI界面的优化；
+	
+2017年5月13日 
+kim_yhow v0.6
+cn.edu.njnu.android.recite.Class
+  1.添加了Article 文章类
+  2.将ArryList中存放的String改为Article
+  3.添加了RecitedatabaseHelper数据库接口类
+  4.改变了主界面的按钮初始状态，改变了主界面的文字
+  5.实现将数据库和apk一起打包
+	
+在res文件夹下添加了raw文件，里面存放一起打包的数据库文件.db
+	

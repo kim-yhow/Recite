@@ -1,35 +1,36 @@
 package cn.edu.njnu.android.recite.Adpter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import cn.edu.njnu.android.recite.R;
+import cn.edu.njnu.android.recite.Class.Article;
 import cn.edu.njnu.android.recite.Class.Phonetic;
 
 public class IndexAdapter extends BaseAdapter {
 
-	private ArrayList<String> index;
+	private ArrayList<Article> index;
 	private Context context;
 	
 	final class ViewHolder{
-		public TextView title;
-		public TextView content;
+		public TextView Letter;
+		public TextView ArticleTitle;
 	}
 	
 
-	public IndexAdapter(Context context,ArrayList<String> index) {
+	public IndexAdapter(Context context,ArrayList<Article> index) {
 		this.index=index;
 		this.context=context;
 	}
 	
 	//更新list
-	public void updateListView(ArrayList<String> list){  
+	public void updateListView(ArrayList<Article> list){  
         this.index =  list;  
         notifyDataSetChanged();  
     }  
@@ -41,7 +42,7 @@ public class IndexAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Object getItem(int arg0) {
+	public Article getItem(int arg0) {
 		return this.index.get(arg0);
 	}
 
@@ -64,22 +65,22 @@ public class IndexAdapter extends BaseAdapter {
 			convertView=LayoutInflater.from(context).inflate(R.layout.menu_left_listitem, null);
 			//相当于是缓存，将适配器中的一些view加入到了vh中，在之后使用时可以直接用vh
 			vh=new ViewHolder();			
-			vh.title=(TextView)convertView.findViewById(R.id.item_title);
-			vh.content=(TextView)convertView.findViewById(R.id.item_content);
+			vh.Letter=(TextView)convertView.findViewById(R.id.item_title);
+			vh.ArticleTitle=(TextView)convertView.findViewById(R.id.item_content);
 			convertView.setTag(vh);	
 		}
 		else vh=(ViewHolder)convertView.getTag();
-				
-		vh.content.setText(index.get(position));
-		
+			
+		vh.ArticleTitle.setText(index.get(position).getTitile());
 		//如果不是是第一个拼音，且这个和上一个汉字的拼音首字母一样，则不显示title，否则就显示
 		if(position!=0&&
-		Phonetic.ToPhonetic(index.get(position).substring(0,1))
-											.equals(Phonetic.ToPhonetic(index.get(position-1).substring(0,1))))
-			vh.title.setVisibility(View.GONE);
+		Phonetic.ToPhonetic(index.get(position).getTitile().substring(0,1))
+											.equals(Phonetic.ToPhonetic(index.get(position-1).getTitile().substring(0,1))))
+			vh.Letter.setVisibility(View.GONE);
 		else{
-			vh.title.setText(Phonetic.ToPhonetic(index.get(position).substring(0,1)));
-			vh.title.setVisibility(View.VISIBLE);
+			Log.d("article",index.get(position).getTitile().substring(0,1));
+			vh.Letter.setText(Phonetic.ToPhonetic(index.get(position).getTitile().substring(0,1)));
+			vh.Letter.setVisibility(View.VISIBLE);
 		}
 		return convertView;
 	}

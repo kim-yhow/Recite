@@ -16,5 +16,13 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+     <style name="ReciteTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/Titleground</item>
+    </style>
+    <style name="Titleground" parent="@android:style/Widget.Holo.Light.ActionBar">    
+        <item name="android:background">#1E90FF</item>  
+    </style>  
+    
 
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="ResourceAsColor">
+        <ignore path="src/cn/edu/njnu/android/recite/Activity/MainActivity.java" />
+    </issue>
+</lint>

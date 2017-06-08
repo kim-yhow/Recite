@@ -16,6 +16,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -25,9 +27,13 @@ import android.os.Message;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
+import android.text.Layout.Alignment;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -79,7 +85,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	private TextView main_context,mHint;
 	private SearchTextView mSearch;
 	private Button bt_start,bt_end;
-	private MainActivity mav;
 	
 	//提示条
 	private Toast mToast;
@@ -164,13 +169,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		public void dispatchMessage(Message msg) {
 			if(msg.what==0){
 				hd.removeMessages(0);
-				bt_end.setClickable(true);
+				bt_end.setEnabled(true);
 				mFirstClick=true;
 				bt_end.setText("结果分析");
+				mHint.setHint("分析结束，点击结果分析查看结果~");
 			}
 			else if(msg.what==1){
 				hd.removeMessages(0);
-				bt_end.setClickable(true);
+				bt_end.setEnabled(true);
 				mFirstClick=false;
 				bt_end.setText("停止评测");
 			}
@@ -178,13 +184,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	};
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {		
 		super.onCreate(savedInstanceState);
-		DisplayMetrics DM=new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(DM);
-		setContentView(R.layout.activity_main);
 		//创建数据库
 		initDB();
+		DisplayMetrics DM=new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(DM);
+		setContentView(R.layout.activity_main);	
 		//初始化标题栏
 		initActionBar();
 		initDrawerLayout();
@@ -245,15 +251,18 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				
+				view.setVisibility(View.VISIBLE);
 				//标题
 				String titmp=mAdapter.getItem(position).getTitile().replace("\\n", "\n");
 				//内容
 				String contmp=mAdapter.getItem(position).getContent().replace("\\n", "\n");
-				Toast.makeText(getApplication(),mAdapter.getItem(position).getTitile() , Toast.LENGTH_SHORT).show();
+				showTip(mAdapter.getItem(position).getTitile());								
+			
 				main_context.setText(titmp+"\n"+contmp);
-				main_context.setGravity(Gravity.CENTER);
 				bt_start.setEnabled(true);
-				bt_end.setEnabled(true);
+				drawerLayout.closeDrawer(Gravity.START);
+				mHint.setHint("点击开始评测，开始进行背诵~");
 			}
 		});
 				
@@ -270,12 +279,11 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		
 		//更改TextView高度
 		android.view.ViewGroup.LayoutParams lp=main_context.getLayoutParams();
-		lp.height=(int) (0.3*DM.heightPixels);
+		lp.height=(int) (0.4*DM.heightPixels);
 		main_context.setLayoutParams(lp);
 	
 		//测试加入文字，设置垂直滚动条
-		main_context.setText("点击左上方的图标选择文章~");
-		//显得妥帖又多情。腊梅开满游园的时候，采摘收集那些芳香的花朵，于朗朗晴日里，将一抹暖香晒干，收于锦囊。在淡淡花香里，铺展信纸写下一句话：“隔着一枚流香的花朵，我眷恋着一场与你温暖的重逢，待花染春山的时候，我们见面吧！”。在漠漠清寒里，将装满花朵的锦囊、信笺和期待遥递给你，一并遥递而去的还有我兀自的深情。你是心念极为安静专注的人，当你打开香囊，那花朵寂静又干净的样子，迅疾又猛烈地散发着的香味，是你喜欢的。遥想，签收花朵的那一刻，隔空静默的你定会有淡淡地欢喜，已是很好。想与你诉说的还有：冬天，心中要有光，要有美，携香一起，逐光暖行。之所以没有说，是因为，我知道即便我不说你亦懂。小时候你是我青梅竹马的玩伴，成年之后你是那个虽淡泊往来却一直两心相悦的人，是我心灵上的知己。知己的世界，追求的是彼此的心灵契合，与情感的亲疏冷热没有关系。这里有的是志向相合，有意趣相投，有微笑，有友善，有仁爱，总之，百般的好，都在这里了。可揽红拥绿，也可稻香而舞，哪怕只共一盏茶，亦可以把整个心都交出来，沐浴在这个世界最初的圣洁中，在彼此的生命里，获得一种释放，一种自由，一种安妥，一种在彼此的尊重与仰望中寂静的绽放。知己的世界，是一个让生命欢悦的世界。世界上的每一种好，只为懂它的人盛装而来。心怀美好的人，总会在某一个合适的时间或者地点，悄无声息地滋生出妖娆的花来。如你跋涉山水来看我，你在我身边，如同花开在侧。纵使失去的青春早已随风飘散，只那残留的馨香在心底生根发芽，亦会开出美丽的花，这是岁月给我们的恩赐。如此时，你只轻语当年。过往何时已婉约成风景，芬芳明媚，惊艳着时光。花染春山时，我们得以相见。春意浓，花正好，人心安。即便是离去，未尽之意亦是圆满。你说：最喜看你岁月安稳的样子。我说：愿所有美好都如你所见！时光如一列火车，带着青春一路远去，一寸寸，终于消失。即使你我已经没有资格再度回到青春年少，也仍愿意怀揣一颗春光明媚的心，迎向阳光，绽放成空谷中，山道里，哪怕绝壁上的一朵凛然清绝的花，随季而开，应季而落。至于欢喜与否，且随了心，只携春一起端坐与岁月的枝头，身体春暖，容颜花开，桃之夭夭，灼灼其华。百世从心起，一笑解千愁。不去辩解，也不轻言放弃，于天地间，睿智豁达。做一个问心无愧的人，一切自然有命运安排。春风自来，桃花遍开，岁月的洗礼，优雅大气。花开重见，落雨飘花，片刻安静，即得自在。");
+		mHint.setHint("点击左上方的图标选择文章~");
 		main_context.setMovementMethod(ScrollingMovementMethod.getInstance());
 		mHint.setMovementMethod(ScrollingMovementMethod.getInstance());
 		mRes.setMovementMethod(ScrollingMovementMethod.getInstance());
@@ -294,11 +302,16 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		sav=(SelectAlphaView)findViewById(R.id.menu_left_sav);	
 		mSearch=(SearchTextView)findViewById(R.id.menu_left_stv);
 		main_context=(TextView)findViewById(R.id.ac_main_context);
+		//将字体文件保存在assets/fonts/目录下，创建Typeface对象
+		Typeface typeFace =Typeface.createFromAsset(getAssets(),"fonts/HWXW.ttf");
+		//使用字体
+		main_context.setTypeface(typeFace);
+		
+		
 		bt_start=(Button)findViewById(R.id.ac_main_start);		
 		bt_end=(Button)findViewById(R.id.ac_main_end);
 		mHint=(TextView)findViewById(R.id.ac_main_result);
 		mRes=(TextView)findViewById(R.id.ac_main_res);
-		mav=this;
 		mToast = Toast.makeText(MainActivity.this, "", Toast.LENGTH_LONG);
 		//设置按钮初始不可按
 		bt_start.setEnabled(false);
@@ -337,17 +350,22 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	@SuppressLint("NewApi")
 	private void initActionBar(){
 		actionBar=super.getActionBar();
+		//设置左上角的按钮可以点击
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setHomeAsUpIndicator(R.drawable.com_btn);
+
 		actionBar.show();
 		actionBar.setDisplayShowHomeEnabled(true);
 		actionBar.setDisplayShowTitleEnabled(false);
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setHomeAsUpIndicator(R.drawable.com_btn);
+	
 		
 		//去除默认的ICON图标
 		 Drawable colorDrawable=new 
 				 ColorDrawable(android.R.color.transparent);
 		actionBar.setIcon(colorDrawable);
+		
 		actionBar.setDisplayShowCustomEnabled(true);
+		
 		TextView tvTitle=new TextView(this);
 		tvTitle.setText("主  页");
 		tvTitle.setTextColor(Color.WHITE);
@@ -451,13 +469,13 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			{
 				Article article=new Article();
 				article.setTitile(cursor.getString(cursor.getColumnIndex("title")));
+				article.setType(cursor.getInt(cursor.getColumnIndex("type")));
 				article.setContent(cursor.getString(cursor.getColumnIndex("content")));		
 				article.setAuthor(cursor.getString(cursor.getColumnIndex("author")));
-				article.setType(cursor.getInt(cursor.getColumnIndex("type")));
 				Log.d("article", article.getTitile()+"   "+article.getContent());
 				mDataList.add(article);
 			}while(cursor.moveToNext());
-		}		
+		}
 	}
 
 
@@ -517,7 +535,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		if ("en_us".equals(language)) {
 			
 		} else {
-			text="你好啊";
+			text="";
 		}
 		
 		main_context.setText(text);
@@ -553,6 +571,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 
 	@Override
 	public void onClick(View view) {
+	
 		if( null == mIse ){
 			// 创建单例失败，与 21001 错误为同样原因，参考 http://bbs.xfyun.cn/forum.php?mod=viewthread&tid=9688
 			this.showTip( "创建对象失败，请确认 libmsc.so 放置正确，且有调用 createUtility 进行初始化" );
@@ -561,27 +580,30 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		
 		switch (view.getId()) {
 			case R.id.ac_main_start:
+				main_context.setVisibility(View.INVISIBLE);
 				if (mIse == null) {
 					return;
 				}
-	
+				if(mIse.isEvaluating()) break;
+				
 				String evaText = main_context.getText().toString();
 				mLastResult = null;
-				
+				bt_end.setEnabled(true);;
 				
 				mHint.setText("");
-				mHint.setHint("请朗读以上内容");
+				mHint.setHint("记住了么？开始背诵吧~");
 				
 				setParams();
 				mIse.startEvaluating(evaText, null, mEvaluatorListener);
 				break;
 			case R.id.ac_main_end:
+				main_context.setVisibility(View.VISIBLE);
 				if(!mFirstClick){
 					if(mIse.isEvaluating()) mIse.stopEvaluating();
 					
-					
+					mHint.setHint("还在分析哦~");
 					bt_end.setText("分析中……");
-					bt_end.setClickable(false);
+					bt_end.setEnabled(false);
 					//计时器检查评测是否结束
 					Timer t=new Timer();
 					t.schedule(new TimerTask() {
@@ -606,7 +628,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 						
 						if(null==mResult) showTip("解析结果为空");
 						else{
-							mResult.total_score=mResult.total_score*20;
+							mResult.content=main_context.getText().toString();
 							mRes.setText(mResult.toString());
 						}
 					}
@@ -617,6 +639,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
 					mRes.setAnimation(aa);			
 					mFirstClick=false;
 					bt_end.setText("停止评测");
+					mHint.setHint("点击开始评测，开始进行背诵~");
 				}
 				break;
 		}

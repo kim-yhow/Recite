@@ -4,7 +4,7 @@
         android:id="@+id/usersetting"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
-        android:icon="@drawable/biz_tie_user_avater_default_common"
+        android:icon="@drawable/biz_tie_user"
         android:title=""/>
     
     

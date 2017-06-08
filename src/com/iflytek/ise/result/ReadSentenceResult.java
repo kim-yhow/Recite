@@ -22,12 +22,20 @@ public class ReadSentenceResult extends Result {
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		
+		String tempStr=String.valueOf(total_score*20);
+		for(int i=0;i<tempStr.length();i++){
+			if(tempStr.charAt(i)=='.'){
+				if(tempStr.length()-i==2) tempStr+='0';
+				else tempStr=tempStr.substring(0,i+2);
+			}
+		}
+		
 		if ("cn".equals(language)) {
 			buffer.append("[总体结果]\n")
-				.append("评测内容：" + content + "\n")
-				.append("朗读时长：" + time_len + "\n")
-				.append("总分：" + total_score*20 + "\n\n")
-				.append("[朗读详情]").append(ResultFormatUtil.formatDetails_CN(sentences));
+				.append("背诵内容："+"\n"+ content)
+				.append("背诵时长：" + (double)Integer.valueOf(time_len)/100 +"s"+ "\n")
+				.append("总分：" +  tempStr+ "\n\n")
+				.append("[背诵详情]").append(ResultFormatUtil.formatDetails_CN(sentences));
 		} else {
 			if (is_rejected) {
 				buffer.append("检测到乱读，")

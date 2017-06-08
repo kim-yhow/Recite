@@ -1,9 +1,7 @@
 package cn.edu.njnu.android.recite.Class;
 
-import android.util.Log;
-
 public class Article {
-	private final static int PEOM=1;
+	private final static int POEM=1;
 	private final static int ESSAY=2; 
 	private String author="";
 	private String titile="";
@@ -32,19 +30,31 @@ public class Article {
 	public String getContent() {
 		return content;
 	}
+	
 	public void setContent(String content) {
-		char tmp;
-		for(int i=0;i<content.length();i++)
-		{
-			tmp=content.charAt(i);
-		
-			if(tmp=='。'||tmp=='？'||tmp=='！'||tmp=='.'||tmp=='!'||tmp=='?')
-			{
-				this.content=this.content+String.valueOf(tmp)+"\n";
+		switch(this.type){
+		case POEM:
+			char tmp;
+			int countmp=0;
+			for(int i=0;i<content.length();i++){
+				tmp=content.charAt(i);
+				countmp++;
+				if(tmp=='。'||tmp=='？'||tmp=='！'||tmp=='.'||tmp=='!'||tmp=='?'||countmp==8)
+					{
+						countmp=0;	
+						this.content=this.content+String.valueOf(tmp)+"\n";						
+					}				
+				else this.content+=String.valueOf(tmp);
+				if(tmp==','||tmp=='，') countmp=0;
 			}
-			else
-				this.content+=String.valueOf(tmp);
+			break;
+		case ESSAY:
+			this.content=content;
+			break;
+		default:
+			break;
 		}
+		
 		
 	}
 	

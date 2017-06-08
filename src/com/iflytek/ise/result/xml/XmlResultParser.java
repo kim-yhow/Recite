@@ -16,8 +16,6 @@ import android.util.Xml;
 
 import com.iflytek.ise.result.FinalResult;
 import com.iflytek.ise.result.ReadSentenceResult;
-import com.iflytek.ise.result.ReadSyllableResult;
-import com.iflytek.ise.result.ReadWordResult;
 import com.iflytek.ise.result.Result;
 import com.iflytek.ise.result.entity.Phone;
 import com.iflytek.ise.result.entity.Sentence;
@@ -99,21 +97,8 @@ public class XmlResultParser {
 				case XmlPullParser.START_TAG:
 					if ("rec_paper".equals(pullParser.getName())) {
 						rec_paperPassed = true;
-					} else if ("read_syllable".equals(pullParser.getName())) {
-						if (!rec_paperPassed) {
-							result = new ReadSyllableResult();
-						} else {
-							readTotalResult(result, pullParser);
-						}
-					} else if ("read_word".equals(pullParser.getName())) {
-						if (!rec_paperPassed) {
-							result = new ReadWordResult();
-							String lan = getLanguage(pullParser);
-							result.language = (null == lan)? "cn": lan;
-						} else {
-							readTotalResult(result, pullParser);
-						}
-					} else if ("read_sentence".equals(pullParser.getName()) || 
+					}
+					else if ("read_sentence".equals(pullParser.getName()) || 
 							"read_chapter".equals(pullParser.getName())) {
 						if (!rec_paperPassed) {
 							result = new ReadSentenceResult();

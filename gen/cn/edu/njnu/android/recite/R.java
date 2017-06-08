@@ -24,18 +24,20 @@ public final class R {
     public static final class drawable {
         public static final int back_move_details_normal=0x7f020000;
         public static final int biz_navigation_tab_pc=0x7f020001;
-        public static final int biz_tie_user_avater_default_common=0x7f020002;
-        public static final int com_btn=0x7f020003;
-        public static final int emotionstore_progresscancelbtn=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int ic_subscibe_search_pressed=0x7f020006;
-        public static final int search_bar_edit_normal=0x7f020007;
-        public static final int search_bar_edit_pressed=0x7f020008;
-        public static final int search_bar_edit_selector=0x7f020009;
-        public static final int search_bar_icon_normal=0x7f02000a;
-        public static final int share_ico=0x7f02000b;
-        public static final int show_head_toast_bg=0x7f02000c;
-        public static final int sidebar_background=0x7f02000d;
+        public static final int biz_tie_user=0x7f020002;
+        public static final int biz_tie_user_avater_default_common=0x7f020003;
+        public static final int com_btn=0x7f020004;
+        public static final int emotionstore_progresscancelbtn=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int ic_subscibe_search_pressed=0x7f020007;
+        public static final int logo=0x7f020008;
+        public static final int search_bar_edit_normal=0x7f020009;
+        public static final int search_bar_edit_pressed=0x7f02000a;
+        public static final int search_bar_edit_selector=0x7f02000b;
+        public static final int search_bar_icon_normal=0x7f02000c;
+        public static final int share_ico=0x7f02000d;
+        public static final int show_head_toast_bg=0x7f02000e;
+        public static final int sidebar_background=0x7f02000f;
     }
     public static final class id {
         public static final int ac_main_context=0x7f090001;
@@ -102,5 +104,7 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int ReciteTheme=0x7f070002;
+        public static final int Titleground=0x7f070003;
     }
 }

@@ -47,7 +47,7 @@ public class ResultFormatUtil {
 				}
 				
 				buffer.append("\n单词[" + ResultTranslateUtil.getContent(word.content) + "] ")
-					.append("朗读：" + ResultTranslateUtil.getDpMessageInfo(word.dp_message))
+					.append("背诵：" + ResultTranslateUtil.getDpMessageInfo(word.dp_message))
 					.append(" 得分：" + word.total_score);
 				if (null == word.sylls) {
 					buffer.append("\n");
@@ -62,7 +62,7 @@ public class ResultFormatUtil {
 					
 					for (Phone phone: syll.phones) {
 						buffer.append("\n\t└音素[" + ResultTranslateUtil.getContent(phone.getStdSymbol()) + "] ")
-							.append(" 朗读：" + ResultTranslateUtil.getDpMessageInfo(phone.dp_message));
+							.append(" 背诵：" + ResultTranslateUtil.getDpMessageInfo(phone.dp_message));
 					}
 					
 				}
@@ -109,7 +109,7 @@ public class ResultFormatUtil {
 					
 					for (Phone phone: syll.phones) {
 						buffer.append("\n\t└音素[" + ResultTranslateUtil.getContent(phone.content) + "] " + "时长：" + phone.time_len)
-							.append(" 朗读：" + ResultTranslateUtil.getDpMessageInfo(phone.dp_message));
+							.append(" 背诵：" + ResultTranslateUtil.getDpMessageInfo(phone.dp_message));
 					}
 					
 				}
